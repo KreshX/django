@@ -7,4 +7,19 @@
 	<h3>Рейтинг: {{ movie.rating }}</h3>
 	<h3>Бюджет: {{ movie.budget }}</h3>
 	<h3>Год: {{ movie.year|default:"Нет данных" }}</h3>
+	<hr>
+	<h2>Режиссёр</h3>
+	<h3>{{movie.director}}</h3>
+	<h2>Актёрский состав</h3>
+	<hr>
+	<h3>
+		<ul>
+			{% for actor in movie.actors.all  %}
+				<li>
+					<p>{{ actor }}</p>
+				</li>
+			{% endfor %}
+		</ul>
+
+	</h3>
 {% endblock %} 

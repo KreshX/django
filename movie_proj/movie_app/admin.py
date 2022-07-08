@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
-from .models import Movie, Director, Actor
+from .models import Movie, Director, Actor, DressingRoom
 from django.db.models import QuerySet
 
 class RatingFilter(admin.SimpleListFilter):
@@ -37,7 +37,12 @@ class DirectorAdmin(admin.ModelAdmin):
 @admin.register(Actor)
 class ActorAdmin(admin.ModelAdmin):
 	prepopulated_fields = {'slug' : ('first_name', 'last_name',)}
-	list_display = ['first_name', 'last_name', 'slug']
+	list_display = ['first_name', 'last_name', 'slug', 'dressing']
+
+@admin.register(DressingRoom)
+class DressingRoomAdmin(admin.ModelAdmin):
+	list_display = ['floor', 'number']
+
 
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):

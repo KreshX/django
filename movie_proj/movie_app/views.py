@@ -14,7 +14,7 @@ def show_all_movie(request):
 
 
 def show_one_movie(request, slug_movie:str):
-	movie = get_object_or_404(Movie, slug=slug_movie)
+	movie = get_object_or_404(Movie, slug=slug_movie) #Передай значение в movie из таблицы Movie, где Movie.slug == slug_movie(который мы передали)
 	return render(request, 'movie_app/one_movie.html', {'movie': movie})
 
 def show_all_actor(request):

@@ -14,7 +14,14 @@ class Director(models.Model):
 		return reverse('director-detail', args=[self.slug])
 
 	def __str__(self):
-		return f'{self.first_name} - {self.last_name}'
+		return f'{self.first_name} {self.last_name}'
+
+class DressingRoom(models.Model):
+	floor = models.IntegerField()
+	number = models.IntegerField()
+
+	def __str__(self):
+		return f'{self.floor} {self.number}'
 
 
 class Actor(models.Model):
@@ -29,7 +36,7 @@ class Actor(models.Model):
 	last_name = models.CharField(max_length=100)
 	gender = models.CharField(max_length=1, choices=GENDERS,default=MALE)
 	slug = models.SlugField(default='', null=False, blank=True)
-
+	dressing = models.OneToOneField(DressingRoom, on_delete=models.SET_NULL, null=True, blank=True)
 	
 
 	# def save(self, *args, **kwargs):
@@ -44,6 +51,9 @@ class Actor(models.Model):
 			return f'Актёр - {self.first_name} {self.last_name}'
 		if self.gender == self.FEMALE:
 			return f'Актриса - {self.first_name} {self.last_name}'
+
+
+
 
 class Movie(models.Model):
 
@@ -66,6 +76,7 @@ class Movie(models.Model):
 	slug = models.SlugField(default='', null=False, blank=True)
 	director = models.ForeignKey(Director, on_delete=models.PROTECT, null=True, blank=True)
 	actors = models.ManyToManyField(Actor)
+
 
 	# def save(self, *args, **kwargs):
 	# 	self.slug = slugify(self.name)
