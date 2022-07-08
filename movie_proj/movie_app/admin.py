@@ -26,12 +26,18 @@ class RatingFilter(admin.SimpleListFilter):
 			return queryset.filter(rating__gte=80)
 		return queryset
 
-admin.site.register(Director)
+# admin.site.register(Director)
 # admin.site.register(Actor)
+
+@admin.register(Director)
+class DirectorAdmin(admin.ModelAdmin):
+	prepopulated_fields = {'slug' : ('first_name', 'last_name',)}
+	list_display = ['first_name', 'last_name', 'slug']
 
 @admin.register(Actor)
 class ActorAdmin(admin.ModelAdmin):
-	prepopulated_fields = {'slug' : ('first_name', )}
+	prepopulated_fields = {'slug' : ('first_name', 'last_name',)}
+	list_display = ['first_name', 'last_name', 'slug']
 
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):

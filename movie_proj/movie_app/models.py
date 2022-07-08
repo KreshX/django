@@ -7,7 +7,11 @@ from django.core.validators import MaxValueValidator,MinValueValidator
 class Director(models.Model):
 	first_name = models.CharField(max_length=100)
 	last_name = models.CharField(max_length=100)
-	director_email = models.EmailField()
+	director_email = models.EmailField(blank=True)
+	slug = models.SlugField(default='', null=False, blank=True)
+
+	def get_url(self):
+		return reverse('director-detail', args=[self.slug])
 
 	def __str__(self):
 		return f'{self.first_name} - {self.last_name}'
@@ -24,13 +28,9 @@ class Actor(models.Model):
 	first_name = models.CharField(max_length=100)
 	last_name = models.CharField(max_length=100)
 	gender = models.CharField(max_length=1, choices=GENDERS,default=MALE)
-	slug = models.SlugField(default='', null=True, blank=True)
+	slug = models.SlugField(default='', null=False, blank=True)
 
-	def __str__(self):
-		if self.gender == self.MALE:
-			return f'Актёр - {self.first_name} {self.last_name}'
-		if self.gender == self.FEMALE:
-			return f'Актриса - {self.first_name} {self.last_name}'
+	
 
 	# def save(self, *args, **kwargs):
 	# 	self.slug = slugify(self.first_name)
@@ -38,6 +38,12 @@ class Actor(models.Model):
 
 	def get_url(self):
 		return reverse('actor-detail', args=[self.slug])
+
+	def __str__(self):
+		if self.gender == self.MALE:
+			return f'Актёр - {self.first_name} {self.last_name}'
+		if self.gender == self.FEMALE:
+			return f'Актриса - {self.first_name} {self.last_name}'
 
 class Movie(models.Model):
 
